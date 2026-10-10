@@ -1,0 +1,30 @@
+{
+  "name": "anniversary-26",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "css": "sass scss/custom.scss css/styles.css",
+  "watch": "sass --watch scss/custom.scss css/styles.css",
+  "build": "sass --style=compressed --no-source-map scss/custom.scss css/style.min.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cstapffa/anniversary-26.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/cstapffa/anniversary-26/issues"
+  },
+  "homepage": "https://github.com/cstapffa/anniversary-26#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.8"
+  },
+  "devDependencies": {
+    "sass": "^1.105.1"
+  }
+}
