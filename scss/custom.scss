@@ -1,13 +1,906 @@
-body{
-    justify-content: center; 
-    align-items: center;
+// =============================================================
+// Aniversario 26 · custom.scss
+// -------------------------------------------------------------
+// 1. Paleta y tipografías     5. Barra de progreso
+// 2. Bootstrap (parcial)      6. Entradas (niveles) y recuerdos
+// 3. Base                     7. Pantalla final (carta, datos, vales)
+// 4. Piezas sueltas           8. Gato, chispas y movimiento reducido
+//
+// Compilar:  npm run sass   (o npm run watch mientras desarrollás)
+// =============================================================
+
+// -------------------------------------------------------------
+// 1. PALETA Y TIPOGRAFÍAS
+// -------------------------------------------------------------
+$vino-900: #1f0a18;      // fondo
+$vino-800: #2b1021;
+$vino-700: #3d1a31;
+$ambar: #f4a93a;         // acento principal (la luz del bar)
+$ambar-claro: #ffbf5c;
+$rosa: #f07fa0;          // errores y toques cálidos
+$crema: #f7ebdc;         // texto y "papel" de las entradas
+$crema-apagado: #cfb9b4; // texto secundario
+$tinta: #2b1021;         // texto sobre papel
+$sello: #b3234f;         // sellos y errores sobre papel
+$gato-negro: #150813;    // pelo de PaatPat y Jojo
+
+$fuente-titulos: "Young Serif", Georgia, "Times New Roman", serif;
+$fuente-texto: "Karla", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+// -------------------------------------------------------------
+// 2. BOOTSTRAP (solo lo que usamos: reboot, contenedor, grilla, helpers)
+//    Se sobreescriben las variables ANTES de importar sus partes.
+// -------------------------------------------------------------
+$font-family-sans-serif: $fuente-texto;
+$headings-font-family: $fuente-titulos;
+$headings-font-weight: 400;
+$headings-color: $crema;
+$body-bg: $vino-900;
+$body-color: $crema;
+$body-font-size: 1.0625rem;
+$line-height-base: 1.6;
+$link-color: $ambar;
+$primary: $ambar;
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 840px,
+  xl: 840px,
+  xxl: 840px,
+);
+
+// Nota: Bootstrap 5.3 todavía usa @import. Los avisos de deprecación se
+// silencian en los scripts de package.json (--silence-deprecation=import).
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
+@import "../node_modules/bootstrap/scss/maps";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/utilities";
+@import "../node_modules/bootstrap/scss/root";
+@import "../node_modules/bootstrap/scss/reboot";
+@import "../node_modules/bootstrap/scss/containers";
+@import "../node_modules/bootstrap/scss/grid";
+@import "../node_modules/bootstrap/scss/helpers";
+@import "../node_modules/bootstrap/scss/utilities/api";
+
+// -------------------------------------------------------------
+// MIXINS PROPIOS: muescas de entrada (el "troquelado")
+// El área transparente se hace con máscara para que se vea el fondo.
+// -------------------------------------------------------------
+
+// Muescas a izquierda y derecha, a una altura $y (corte horizontal)
+@mixin muescas-laterales($y) {
+  $a: radial-gradient(circle var(--n) at 0 $y, transparent 97%, #000);
+  $b: radial-gradient(circle var(--n) at 100% $y, transparent 97%, #000);
+  -webkit-mask-image: $a, $b;
+  mask-image: $a, $b;
+  -webkit-mask-size: 51% 100%;
+  mask-size: 51% 100%;
+  -webkit-mask-position: left top, right top;
+  mask-position: left top, right top;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 
-div{
-    width: 500px;
-    height: 500px;
+// Muescas arriba y abajo, a una distancia $x (corte vertical)
+@mixin muescas-verticales($x) {
+  $a: radial-gradient(circle var(--n) at $x 0, transparent 97%, #000);
+  $b: radial-gradient(circle var(--n) at $x 100%, transparent 97%, #000);
+  -webkit-mask-image: $a, $b;
+  mask-image: $a, $b;
+  -webkit-mask-size: 100% 51%;
+  mask-size: 100% 51%;
+  -webkit-mask-position: left top, left bottom;
+  mask-position: left top, left bottom;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+// -------------------------------------------------------------
+// 3. BASE
+// -------------------------------------------------------------
+html {
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: $vino-900;
+  // Una lámpara de bar encendida arriba
+  background-image: radial-gradient(70rem 36rem at 50% -10rem, rgba($ambar, 0.2), transparent 70%);
+  background-repeat: no-repeat;
+  font-family: $fuente-texto;
+}
+
+:focus-visible {
+  outline: 3px solid $ambar;
+  outline-offset: 3px;
+}
+
+// Sobre papel crema el ámbar no contrasta: el foco pasa a tinta
+.entrada,
+.vale,
+.carta {
+  :focus-visible {
+    outline-color: $tinta;
+  }
+}
+
+// Grano sutil sobre toda la página
+.grano {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.app {
+  padding-bottom: 2rem;
+}
+
+.pantalla {
+  padding-block: 1.5rem 3rem;
+
+  &--estrecha {
+    max-width: 36rem;
+    margin-inline: auto;
+  }
+}
+
+// -------------------------------------------------------------
+// 4. PIEZAS SUELTAS (botones, enlaces, intro, pie)
+// -------------------------------------------------------------
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.7rem 1.6rem;
+  border: 0;
+  border-radius: 999px;
+  background: $ambar;
+  color: $tinta;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.2s ease;
+
+  &:hover {
+    background: $ambar-claro;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &--seguir {
+    margin-top: 1.5rem;
+  }
+}
+
+// Sobre papel, los botones van en tinta
+.entrada .boton,
+.vale .boton {
+  background: $tinta;
+  color: $crema;
+
+  &:hover {
+    background: #4a2140;
+  }
+}
+
+.enlace {
+  padding: 0.25rem 0;
+  border: 0;
+  background: none;
+  color: $ambar;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  cursor: pointer;
+
+  &:hover {
+    color: $ambar-claro;
+  }
+
+  &--tenue {
+    color: $crema-apagado;
+    font-size: 0.9rem;
+  }
+}
+
+.intro__titulo {
+  margin-bottom: 1.25rem;
+  font-size: clamp(2.75rem, 12vw, 5.25rem);
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.intro__texto {
+  max-width: 28rem;
+  margin-bottom: 2.25rem;
+  color: $crema-apagado;
+  font-size: 1.2rem;
+}
+
+.pie {
+  padding-block: 1rem 3rem;
+  text-align: center;
+}
+
+// -------------------------------------------------------------
+// 5. BARRA DE PROGRESO
+// -------------------------------------------------------------
+.barra {
+  padding-top: 1.25rem;
+}
+
+.progreso {
+  display: flex;
+  gap: 0.4rem;
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.progreso__paso {
+  flex: 1;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: rgba($crema, 0.18);
+  transition: background 0.4s ease;
+
+  &--hecho {
+    background: $ambar;
+  }
+
+  &--actual {
+    background: linear-gradient(90deg, $ambar 0 35%, rgba($crema, 0.18) 35%);
+  }
+}
+
+// -------------------------------------------------------------
+// 6. ENTRADAS (niveles) Y RECUERDOS
+// -------------------------------------------------------------
+// .caja lleva la sombra: la máscara de .entrada recortaría un box-shadow.
+.caja {
+  filter: drop-shadow(0 1rem 1.4rem rgba(0, 0, 0, 0.45));
+
+  &--sacude {
+    animation: sacudir 0.4s ease;
+  }
+}
+
+.entrada {
+  --n: 0.9rem;     // radio de las muescas
+  --talon: 8rem;   // alto del talón (lo actualiza index.js)
+
+  background: $crema;
+  color: $tinta;
+  border-radius: 1.1rem;
+  @include muescas-laterales(calc(100% - var(--talon)));
+
+  &__cuerpo {
+    padding: 1.5rem 1.5rem 1.25rem;
+  }
+
+  &__numero {
+    margin: 0;
+    color: rgba($tinta, 0.72);
+    font-size: 0.95rem;
+  }
+
+  &__titulo {
+    margin: 0.25rem 0 1rem;
+    color: $tinta;
+    font-size: 1.9rem;
+    line-height: 1.1;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__pregunta {
+    margin: 0 0 1rem;
+    font-size: 1.15rem;
+    line-height: 1.5;
+  }
+
+  &__visual {
+    margin: 0.75rem 0 0;
+    line-height: 1.2;
+
+    &--emoji {
+      font-size: 2.4rem;
+      letter-spacing: 0.08em;
+    }
+
+    &--cifra {
+      font-family: $fuente-titulos;
+      font-size: 1.55rem;
+      letter-spacing: 0.14em;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  &__lista {
+    margin: 0;
+    padding-left: 1.2rem;
+
+    li + li {
+      margin-top: 0.5rem;
+    }
+  }
+
+  // Línea punteada = el corte del talón
+  &__talon {
+    padding: 1.25rem 1.5rem 1.5rem;
+    border-top: 2px dashed rgba($tinta, 0.3);
+  }
+}
+
+// Formulario de respuesta
+.respuesta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  @include media-breakpoint-up(sm) {
+    flex-direction: row;
+  }
+}
+
+.campo {
+  flex: 1;
+  min-width: 0;
+  min-height: 3rem;
+  padding: 0.7rem 1rem;
+  border: 2px solid rgba($tinta, 0.28);
+  border-radius: 0.75rem;
+  background: rgba($tinta, 0.05);
+  color: $tinta;
+  font: inherit;
+  font-size: 1.1rem; // 16px+ evita el zoom automático en iOS
+
+  &::placeholder {
+    color: rgba($tinta, 0.5);
+  }
+
+  &:focus {
+    border-color: $tinta;
+    outline: none;
+  }
+}
+
+// Opciones múltiples
+.opciones {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.opcion {
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid rgba($tinta, 0.28);
+  border-radius: 0.75rem;
+  background: transparent;
+  color: $tinta;
+  font: inherit;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    border-color: $tinta;
+    background: rgba($tinta, 0.06);
+  }
+
+  &--mal {
+    border-color: $sello;
+    background: rgba($sello, 0.1);
+    color: $sello;
+    text-decoration: line-through;
+    cursor: not-allowed;
+  }
+
+  &--bien {
+    border-color: $tinta;
+    background: $tinta;
+    color: $crema;
+  }
+}
+
+// Sello de "Desbloqueado" / "Canjeado"
+.sello {
+  display: inline-block;
+  margin: 0;
+  padding: 0.35rem 0.8rem;
+  border: 3px solid $sello;
+  border-radius: 0.5rem;
+  color: $sello;
+  font-family: $fuente-titulos;
+  font-size: 1.25rem;
+  line-height: 1.1;
+  opacity: 0.92;
+  transform: rotate(-8deg);
+  animation: sellar 0.55s cubic-bezier(0.2, 1.7, 0.4, 1) both;
+
+  &--quieto {
+    animation: none;
+  }
+}
+
+.entrada--resuelta .entrada__talon {
+  display: flex;
+  justify-content: center;
+  padding-block: 1.5rem;
+}
+
+// Mensajes y pista
+.mensaje {
+  min-height: 1.6em;
+  margin: 1.25rem 0 0;
+  font-weight: 500;
+
+  &--mal {
+    color: $rosa;
+  }
+
+  &--bien {
+    color: $ambar;
+  }
+}
+
+.ayuda {
+  margin-top: 0.5rem;
+}
+
+.pista {
+  margin: 0.5rem 0 0;
+  color: $crema;
+}
+
+// Recuerdo desbloqueado
+.recuerdo {
+  margin-top: 2.25rem;
+  scroll-margin-top: 1rem;
+  animation: aparecer 0.7s ease-out both;
+}
+
+.polaroid {
+  margin: 0;
+  padding: 0.75rem 0.75rem 1rem;
+  border-radius: 0.4rem;
+  background: $crema;
+  color: $tinta;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+  transform: rotate(-1.2deg);
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 0.2rem;
+  }
+
+  figcaption {
+    margin-top: 0.8rem;
+    font-family: $fuente-titulos;
+    font-size: 1.1rem;
+    line-height: 1.35;
+  }
+}
+
+.nota {
+  margin: 0;
+
+  p {
+    margin: 0;
+    color: $ambar;
+    font-family: $fuente-titulos;
+    font-size: 1.65rem;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+
+  footer {
+    margin-top: 0.75rem;
+    color: $crema-apagado;
+  }
+}
+
+.reproductor {
+  audio {
+    display: block;
+    width: 100%;
+  }
+
+  &__pie {
+    margin: 1rem 0 0;
+    font-family: $fuente-titulos;
+    font-size: 1.3rem;
+    line-height: 1.35;
+    color: $ambar;
+  }
+}
+
+// Aviso cuando falta una foto o un audio en assets/
+.aviso-vacio {
+  display: grid;
+  place-items: center;
+  min-height: 8rem;
+  padding: 1rem;
+  border: 2px dashed currentColor;
+  border-radius: 0.4rem;
+  font-size: 0.95rem;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+// -------------------------------------------------------------
+// 7. PANTALLA FINAL
+// -------------------------------------------------------------
+.final {
+  > * + * {
+    margin-top: 4.5rem;
+  }
+
+  &__titulo {
+    margin-bottom: 0.75rem;
+    font-size: clamp(2.5rem, 10vw, 4.5rem);
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  &__texto {
+    margin: 0;
+    color: $crema-apagado;
+    font-size: 1.2rem;
+  }
+}
+
+.seccion__titulo {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.seccion__texto {
+  max-width: 32rem;
+  margin-bottom: 1.75rem;
+  color: $crema-apagado;
+}
+
+// Carta
+.carta {
+  max-width: 36rem;
+  margin-inline: auto;
+  padding: 2rem 1.5rem 2.25rem;
+  border-radius: 1.1rem;
+  background: $crema;
+  color: $tinta;
+  box-shadow: 0 1.2rem 2rem rgba(0, 0, 0, 0.4);
+
+  @include media-breakpoint-up(sm) {
+    padding: 2.75rem 2.5rem;
+  }
+
+  &__titulo {
+    margin-bottom: 1.5rem;
+    color: $tinta;
+    font-size: 2rem;
+  }
+
+  &__parrafo {
+    margin: 0 0 1.25rem;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    opacity: 0.12;
+    transition: opacity 0.9s ease;
+
+    &.is-visible {
+      opacity: 1;
+    }
+  }
+
+  &__firma {
+    margin: 2rem 0 0;
+    color: $sello;
+    font-family: $fuente-titulos;
+    font-size: 1.5rem;
+  }
+}
+
+// Datos "Nuestros tres años"
+.dato {
+  height: 100%;
+  padding-top: 1rem;
+  border-top: 1px solid rgba($crema, 0.22);
+
+  &__valor {
+    margin: 0;
+    color: $ambar;
+    font-family: $fuente-titulos;
+    font-size: clamp(3rem, 12vw, 4.25rem);
+    line-height: 1;
+  }
+
+  &__etiqueta {
+    margin: 0.6rem 0 0;
+    font-size: 1.15rem;
+  }
+
+  &__nota {
+    margin: 0.35rem 0 0;
+    color: $crema-apagado;
+    font-size: 0.95rem;
+  }
+
+  &--grande &__valor {
+    font-size: clamp(5rem, 24vw, 9rem);
+  }
+}
+
+// Vales: cupón horizontal con talón a la derecha
+.vale {
+  --n: 0.9rem;
+
+  display: grid;
+  grid-template-columns: 1fr 8rem;
+  border-radius: 1rem;
+  background: $crema;
+  color: $tinta;
+  @include muescas-verticales(calc(100% - 8rem));
+
+  &__cuerpo {
+    padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+  }
+
+  &__titulo {
+    margin: 0 0 0.5rem;
+    color: $tinta;
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+
+  &__detalle {
+    margin: 0;
+    color: rgba($tinta, 0.82);
+    font-size: 0.98rem;
+  }
+
+  &__fecha {
+    margin: 0.75rem 0 0;
+    color: $sello;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  &__talon {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    padding: 0.75rem 0.5rem;
+    border-left: 2px dashed rgba($tinta, 0.3);
+
+    .boton {
+      padding-inline: 1rem;
+    }
+
+    .sello {
+      font-size: 1rem;
+    }
+  }
+
+  &--canjeado &__cuerpo {
+    opacity: 0.6;
+  }
+}
+
+.cierre {
+  margin-bottom: 0;
+  font-family: $fuente-titulos;
+  font-size: clamp(2rem, 9vw, 3rem);
+  line-height: 1.1;
+  text-align: center;
+}
+
+// -------------------------------------------------------------
+// 8. GATO, CHISPAS Y MOVIMIENTO REDUCIDO
+// -------------------------------------------------------------
+.capa-gato,
+.capa-chispas {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.capa-gato {
+  z-index: 60;
+}
+
+.capa-chispas {
+  z-index: 40;
+}
+
+.gato {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0;
+  width: 6.5rem;
+  color: $ambar;
+  animation: gato-pasa 6s linear forwards;
+
+  @include media-breakpoint-up(sm) {
+    width: 7.5rem;
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    fill: currentColor;
+  }
+
+  &__nombre {
+    display: block;
+    margin-bottom: 0.1rem;
+    color: $crema;
+    font-size: 0.85rem;
     text-align: center;
+  }
+
+   &__ojo {
+    fill: $vino-900;
+  }
+
+  // La Rubia: ámbar (color base de .gato)
+
+  // PaatPat y Jojo: negros. Sin borde de luz se perderían sobre el fondo vino.
+  &--paatpat,
+  &--jojo {
+    color: $gato-negro;
+
+    svg {
+      filter: drop-shadow(0 0 1px $crema) drop-shadow(0 0 0.5rem rgba($ambar, 0.45));
+    }
+
+    .gato__ojo {
+      fill: $ambar; // ojo encendido, se ve sobre el pelo negro
+    }
+  }
+
+  // Detalles blancos: hocico y zarpas (PaatPat), punta de la cola (Jojo)
+  &__blanco {
+    fill: $crema;
+  }
+
+  &__punta {
+    stroke: $crema;
+  }
+
+  &__nariz {
+    fill: $rosa;
+  }
+
+  &__pata {
+    transform-box: fill-box;
+    transform-origin: 50% 0;
+
+    &--a {
+      animation: pata 0.45s ease-in-out infinite alternate;
+    }
+
+    &--b {
+      animation: pata 0.45s ease-in-out infinite alternate-reverse;
+    }
+  }
+
+  &__cola {
+    transform-box: fill-box;
+    transform-origin: 100% 100%;
+    animation: cola 0.9s ease-in-out infinite alternate;
+  }
+}
+
+.chispa {
+  position: absolute;
+  top: -1rem;
+  width: var(--tam, 8px);
+  height: var(--tam, 8px);
+  border-radius: 50%;
+  background: $ambar;
+  opacity: 0;
+  animation: caer var(--dur, 7s) linear var(--delay, 0s) both;
+
+  &--1 {
+    background: $rosa;
+  }
+
+  &--2 {
+    background: $crema;
+  }
+}
+
+// ---------- Keyframes ----------
+@keyframes sacudir {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(3px); }
+}
+
+@keyframes sellar {
+  from { opacity: 0; transform: rotate(-8deg) scale(2.4); }
+  to { opacity: 0.92; transform: rotate(-8deg) scale(1); }
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gato-pasa {
+  from { transform: translateX(-9rem); }
+  to { transform: translateX(calc(100vw + 2rem)); }
+}
+
+@keyframes gato-aparece {
+  0%, 100% { opacity: 0; }
+  20%, 80% { opacity: 1; }
+}
+
+@keyframes pata {
+  from { transform: rotate(-18deg); }
+  to { transform: rotate(18deg); }
+}
+
+@keyframes cola {
+  from { transform: rotate(-8deg); }
+  to { transform: rotate(8deg); }
+}
+
+@keyframes caer {
+  0% { opacity: 0; transform: translate3d(0, -2rem, 0); }
+  10% { opacity: 0.9; }
+  85% { opacity: 0.8; }
+  100% { opacity: 0; transform: translate3d(var(--deriva, 0), 105vh, 0); }
+}
+
+// ---------- Respeta prefers-reduced-motion ----------
+@media (prefers-reduced-motion: reduce) {
+  .caja--sacude,
+  .recuerdo,
+  .sello {
+    animation: none;
+  }
+
+  .boton,
+  .opcion,
+  .progreso__paso,
+  .carta__parrafo {
+    transition: none;
+  }
+
+  // El gato aparece quieto en el centro unos segundos, sin caminar
+  .gato {
+    left: 50%;
+    margin-left: -3.25rem;
+    animation: gato-aparece 2.4s ease both;
+  }
+
+  .gato__pata,
+  .gato__cola {
+    animation: none;
+  }
 }

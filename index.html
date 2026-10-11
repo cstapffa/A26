@@ -4,15 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Camila Stapff">
-    <title><3</title>
+    <title>Son 2</title>
 
+    <!-- Favicon -->
+    <!-- <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎟️</text></svg>"> -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231f0a18'/><text x='50' y='68' font-size='62' font-weight='700' text-anchor='middle' fill='%23f07fa0' font-family='Georgia,serif'>%26lt;3</text></svg}">
+
+    <!-- Tipografías: Young Serif (títulos) + Karla (texto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Young+Serif&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css" type="text/css">
 </head>
 <body>
-    <main>
-        <div>
-            <p>¡Feliz aniversario!</p>
-        </div>
-    </main>
+     <!-- Capas decorativas (no interactivas) -->
+  <div class="grano" aria-hidden="true"></div>
+  <div class="capa-chispas" id="capa-chispas" aria-hidden="true"></div>
+  <div class="capa-gato" id="capa-gato" aria-hidden="true"></div>
+ 
+  <!-- Progreso -->
+  <header class="barra" id="barra" hidden>
+    <div class="container">
+      <ol class="progreso" id="progreso" aria-label="Progreso"></ol>
+    </div>
+  </header>
+ 
+  <main class="container app" id="app">
+ 
+    <!-- ============ INTRO ============ -->
+    <section class="pantalla pantalla--estrecha" id="intro" aria-labelledby="intro-titulo" hidden>
+      <h1 class="intro__titulo" id="intro-titulo">¡Feliz aniversario!</h1>
+      <p class="intro__texto">
+        Tres años juntos, dos en pareja, países distintos y yo programando un regalo en vez de abrazarte. Así estamos.
+      </p>
+ 
+      <div class="caja">
+        <article class="entrada" id="entrada-intro" aria-label="Tu entrada">
+          <div class="entrada__cuerpo">
+            <h2 class="entrada__titulo">Tu entrada incluye</h2>
+            <ul class="entrada__lista">
+              <li>Siete preguntas que solo nosotros sabemos responder.</li>
+              <li>Un recuerdo por cada acierto.</li>
+              <li>Una carta, unos números y unos vales canjeables.</li>
+            </ul>
+          </div>
+          <div class="entrada__talon">
+            <button type="button" class="boton" id="btn-empezar">Entrar</button>
+          </div>
+        </article>
+      </div>
+    </section>
+ 
+    <!-- ============ NIVELES ============ -->
+    <section class="pantalla pantalla--estrecha" id="nivel" hidden></section>
+ 
+    <!-- ============ FINAL ============ -->
+    <section class="pantalla final" id="final" aria-labelledby="final-titulo" hidden>
+      <header class="final__apertura">
+        <h2 class="final__titulo" id="final-titulo">Llegaste al final.</h2>
+        <p class="final__texto">Lo que sigue no tiene respuesta correcta.</p>
+      </header>
+ 
+      <article class="carta" aria-labelledby="carta-titulo">
+        <h3 class="carta__titulo" id="carta-titulo">Una carta</h3>
+        <div id="carta-cuerpo"></div>
+        <p class="carta__firma" id="carta-firma"></p>
+      </article>
+ 
+      <section aria-labelledby="resumen-titulo">
+        <h3 class="seccion__titulo" id="resumen-titulo">Nuestros ratitos juntos</h3>
+        <div class="row g-4" id="resumen-datos"></div>
+      </section>
+ 
+      <section aria-labelledby="vales-titulo">
+        <h3 class="seccion__titulo" id="vales-titulo">Vales</h3>
+        <p class="seccion__texto">
+          Se canjean con un toque. No vencen, pero me reservo el derecho de cobrarlos en persona.
+        </p>
+        <div class="row g-4" id="vales-lista"></div>
+      </section>
+ 
+      <p class="cierre">Te amo</p>
+    </section>
+ 
+    <noscript>
+      <p class="intro__texto">Esta web necesita JavaScript para funcionar. Activalo y recargá la página.</p>
+    </noscript>
+  </main>
+ 
+  <footer class="container pie">
+    <button type="button" class="enlace enlace--tenue" id="btn-reiniciar">Empezar de nuevo</button>
+  </footer>
+
+  <!-- JS -->
+  <script src="js/index.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
