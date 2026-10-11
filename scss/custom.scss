@@ -484,21 +484,25 @@ body {
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
   transform: rotate(-1.2deg);
 
-  img {
+  img,
+  video {
+    width: min(100%, 360px); // tope de tamaño, se adapta al celu
+    height: auto;
+    /* aspect-ratio: 1 / 1;     // cuadrada */
+    object-fit: cover;       // recorta en vez de estirar
+    object-position: center; // punto de enfoque del recorte
+    border-radius: 12px;     // opcional
     display: block;
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 0.2rem;
+    margin: 0 auto;
   }
-
+  
   figcaption {
     margin-top: 0.8rem;
     font-family: $fuente-titulos;
     font-size: 1.1rem;
     line-height: 1.35;
   }
-}
+  }
 
 .nota {
   margin: 0;
@@ -702,6 +706,37 @@ body {
 
   &--canjeado &__cuerpo {
     opacity: 0.6;
+  }
+}
+
+// Botón de música del final
+.musica {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.25rem;
+  border: 2px solid $ambar;
+  border-radius: 999px;
+  background: transparent;
+  color: $ambar;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background: rgba($ambar, 0.14);
+  }
+
+  &--suena {
+    background: $ambar;
+    color: $tinta;
+
+    &:hover {
+      background: $ambar-claro;
+    }
   }
 }
 

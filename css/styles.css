@@ -7157,12 +7157,16 @@ body {
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
   transform: rotate(-1.2deg);
 }
-.polaroid img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4/3;
+.polaroid img,
+.polaroid video {
+  width: min(100%, 360px);
+  height: auto;
+  /* aspect-ratio: 1 / 1;     // cuadrada */
   object-fit: cover;
-  border-radius: 0.2rem;
+  object-position: center;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto;
 }
 .polaroid figcaption {
   margin-top: 0.8rem;
@@ -7349,6 +7353,33 @@ body {
 }
 .vale--canjeado .vale__cuerpo {
   opacity: 0.6;
+}
+
+.musica {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.25rem;
+  border: 2px solid #f4a93a;
+  border-radius: 999px;
+  background: transparent;
+  color: #f4a93a;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.musica:hover {
+  background: rgba(244, 169, 58, 0.14);
+}
+.musica--suena {
+  background: #f4a93a;
+  color: #2b1021;
+}
+.musica--suena:hover {
+  background: #ffbf5c;
 }
 
 .cierre {

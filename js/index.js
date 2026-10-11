@@ -40,23 +40,21 @@ const LEVELS = [
     id: 1,
     tipo: "texto",
     titulo: "La fecha",
-    pregunta: "Feriado patrio. Una resaca de un lado, un asado del otro. Dos desconocidos y un match. ¿Qué día fue? (DD/MM)",
+    pregunta: "Feriado patrio. Una fuerte resaca de un lado, un asado del otro. Dos desconocidos y un match. ¿Qué día fue? (DD/MM)",
     placeholder: "DD/MM",
     respuestasAceptadas: ["25/08", "25/8", "25-08", "25-8", "25 de agosto", "25 agosto"],
     pista: "Independencia de Uruguay.",
-    // Si tenés la captura del primer mensaje de Tinder, cambiá el recuerdo por:
-    // { tipo: "imagen", contenido: "assets/img/nivel1-tinder.jpg", alt: "Nuestro primer mensaje", pie: "Ahí empezó todo." }
-    recuerdo: { tipo: "texto", contenido: "Yo estaba con resaca y vos en un asado. Ahí empezó todo." },
+    recuerdo: { tipo: "imagen", contenido: "assets/img/tinder.png", alt: "El primer mensaje", pie: "Ahí empezó todo <3" },
   },
   {
     id: 2,
     tipo: "texto",
-    titulo: "La noche anterior",
-    pregunta: "La noche antes de hablarnos, vos habías ido a una fiesta Brooklyn y todavía andabas flotando. ¿Qué banda viste?",
-    placeholder: "Una banda",
-    respuestasAceptadas: ["bandalos chinos", "bandalos", "los bandalos chinos"],
-    pista: "Empiezan con B y suenan a travesura.",
-    recuerdo: { tipo: "texto", contenido: "Yo no estaba ahí, pero ya te estaba esperando." },
+    titulo: "Caminata por Malvín",
+    pregunta:
+      "Caminamos desde Euskal hasta la rambla, luego por la playa de Malvín, nos quedamos en las rocas, en una zona súper aislada. Pasamos un buen rato ahí, y a la vuelta algo no te dejó en paz ni un segundo. ¿Qué te perseguía?",
+    respuestasAceptadas: ["mosquitos", "mosquito", "una nube de mosquitos", "nube de mosquitos"],
+    pista: "Zumbaban, picaban y eran muchísimos.",
+    recuerdo: {tipo: "texto", contenido: "Todavía me río de verte correr con tu nube personal de mosquitos. Pero esa tarde de rocas y mar, lejos de todo, solos los dos (guiño-guiño), es de mis favoritas :)"},
   },
   {
     id: 3,
@@ -64,31 +62,31 @@ const LEVELS = [
     titulo: "El desastre del vino",
     pregunta: "Tercera cita. Pantalón claro. Una jarra de vino con vocación de cascada. ¿En qué bar pasó?",
     opciones: [
-      { texto: "Brecha" },
-      { texto: "Finisterre" },
-      { texto: "Sumo" },
-      { texto: "Un bar que no existe", mensaje: "Ese bar no existe. La jarra de vino, en cambio, sí existió, y mi pantalón lo recuerda." },
+      { texto: "Brecha", mensaje: "En ese bar no fue. La jarra de vino, en cambio, sí existió, y mi pantalón lo recuerda."},
+      { texto: "Finisterre"},
+      { texto: "Sumo", mensaje: "En ese bar no fue. La jarra de vino, en cambio, sí existió, y mi pantalón lo recuerda."},
+      { texto: "Luna", mensaje: "En ese bar no fue. La jarra de vino, en cambio, sí existió, y mi pantalón lo recuerda."},
     ],
     respuestasAceptadas: ["Finisterre"],
     pista: "No fue en nuestro bar por excelencia.",
     recuerdo: {
       tipo: "imagen",
-      contenido: "assets/img/nivel3-brecha.jpg",
+      contenido: "assets/img/brecha.jpg",
       alt: "El bar Brecha",
-      pie: "Brecha sigue siendo nuestro bar, pero Finisterre me debe un pantalón.",
+      pie: "Brecha sigue siendo nuestro bar, pero Finisterre me debe un pantalón :/",
     },
   },
   {
     id: 4,
     tipo: "texto",
     titulo: "El cifrado",
-    pregunta: "Esto fue lo que usé para engatusarte. Corré cada letra 3 lugares hacia atrás.",
-    visual: "wdoodulqhv frq wxfr",           // César +3 de "tallarines con tuco" (verificado)
+    pregunta: "El agua de tanga a vos jamás te la pondría en un té, pero algo si que usé para engatusarte. Descifrate el anagrama.",
+    visual: "¡Toca linternas un clon!",
     visualClase: "entrada__visual--cifra",
     placeholder: "Descifralo",
-    respuestasAceptadas: ["tallarines con tuco"],
-    pista: "A=D, B=E, C=F... pero al revés. Es una comida.",
-    recuerdo: { tipo: "texto", contenido: "Y no, el agua de tanga no fue en un té." },
+    respuestasAceptadas: ["tallarines con tuco", "tallarines"],
+    pista: "Es una comida.",
+    recuerdo: { tipo: "texto", contenido: "Mi tuco simplemente no falla :D" },
   },
   {
     id: 5,
@@ -102,8 +100,8 @@ const LEVELS = [
     respuestasAceptadas: ["araña", "modo araña", "arana", "modo arana"],
     pista: "Tiene ocho patas.",
     recuerdo: {
-      tipo: "imagen",
-      contenido: "assets/img/nivel5-la-paloma.jpg",
+      tipo: "video",
+      contenido: "assets/img/la-paloma.mp4",
       alt: "La Paloma",
       pie: "Flasheamos lo mismo y no nos dijimos nada hasta el final. Somos un caso.",
     },
@@ -116,15 +114,16 @@ const LEVELS = [
     opciones: [
       { texto: "Dillom" },
       { texto: "Pa7triel y Catito Amorosos" },
-      { texto: "Luis Miguel", mensaje: "Esa es la playlist de 4 horas, no un toque." },
+      { texto: "Luis Miguel", mensaje: "Esa es tu playlist de 4 horas, no un toque."},
+      { texto: "la Juli" },
     ],
     respuestasAceptadas: ["Dillom"],
     pista: "Fue el que abrió la lista.",
     recuerdo: {
       tipo: "imagen",
-      contenido: "assets/img/nivel6-toques.jpg",
+      contenido: "assets/img/dillom.jpg",
       alt: "Entradas y fotos de nuestros toques",
-      pie: "Y los que faltan.",
+      pie: "Y los que faltan :D",
     },
   },
   {
@@ -138,7 +137,7 @@ const LEVELS = [
     recuerdo: {
       tipo: "audio",
       contenido: "assets/audio/spaghetti-del-rock.mp3",
-      pie: "Esa noche lloramos los dos. Te amo.",
+      pie: "Esa noche lloramos y lo supimos los dos <3",
     },
   },
 ];
@@ -166,10 +165,10 @@ const GATOS = [
 
 /* Carta final: un string por párrafo. TODO: escribila vos, sin pulir. */
 const CARTA = [
-  "[PÁRRAFO 1: cómo te sentís hoy, tres años después.]",
-  "[PÁRRAFO 2: lo que más extrañás de estar con él.]",
-  "[PÁRRAFO 3: algo que le agradezcas o le prometas.]",
-  "[PÁRRAFO 4: el cierre, lo último que querés que lea.]",
+  "Tres años después, sigo sintiendo que tengo muchísima suerte de haberte encontrado. A veces me cuesta creer todo lo que vivimos desde que nos conocimos, todo lo que cambió y todo lo que fuimos construyendo casi sin darnos cuenta. Hoy cumplimos dos años de ser pareja, pero cuando pienso en nosotros no puedo evitar pensar también en todo lo que hubo antes, en cómo llegamos hasta acá y en lo lindo que es que, entre tantas personas y tantas casualidades, nos hayamos elegido. Si algo tengo claro después de todo este tiempo, es que te quiero en mi vida. Y no solamente en los días extraordinarios, sino también en los más comunes, en esos que terminan siendo especiales simplemente porque los compartimos.",
+  "Extraño muchísimo estar con vos. Y no hablo solamente de los abrazos, los besos o de poder dormir juntos, aunque ni te imaginás cuánto extraño eso. Extraño las pequeñas cosas: contarte cualquier pavada que me pasó durante el día, mirarte mientras hacés algo, molestarte por cualquier boludez, compartir silencios sin sentir que tenemos que llenarlos, saber que estás ahí y poder acercarme a vos porque sí. Extraño esa facilidad que tiene estar juntos, esa sensación de que no hace falta organizar nada ni hacer nada extraordinario para que estar con vos sea suficiente. Ahora hay un océano de por medio y un montón de cosas que quisiera poder compartirte en persona. Hay días en los que me encantaría achicar el mundo un ratito, aparecer ahí y abrazarte hasta que se me olvide que tengo que volver a extrañarte.",
+  "Gracias por ser parte de mi vida de la manera en que lo sos. Gracias por lo que compartimos, por lo que me das y por seguir construyendo esto conmigo, incluso cuando las circunstancias nos ponen a prueba de formas que no elegimos. Si algo quiero prometerte, es que voy a seguir eligiéndonos, cuidando lo nuestro y haciendo lugar para vos y para nosotros en todo lo que voy haciendo. No te puedo prometer que todo va a ser fácil ni que nunca vamos a extrañarnos más de la cuenta, pero sí quiero que sepas que la distancia no cambia las ganas que tengo de compartir todo contigo. Quiero que sigamos creciendo, cambiando, conociéndonos de nuevas maneras y encontrándonos una y otra vez (como aquel día en la puerta de facultad).",
+  "Ojalá pudiera terminar esta carta dándote abrazándote. Pero, como hoy no puedo, te lo dejo escrito para que lo tengas cerquita y puedas volver a leerlo cuando me extrañes. Te amo muchomuchomucho. ",
 ];
 
 /* "Nuestros tres años". valor puede ser un número o una función.
@@ -177,19 +176,19 @@ const CARTA = [
 const RESUMEN = [
   { id: "dias", valor: () => diasJuntos(), etiqueta: "días juntos, aunque ahora a distancia", nota: "Y los que faltan, los estoy contando.", grande: true },
   // TODO: actualizá el número de toques si querés. Hoy cuenta los 9 de la lista más "los que se me olvidan".
-  { id: "toques", valor: 9, sufijo: "+", etiqueta: "toques, recitales y fiestas", nota: "Dillom, Divididos, Rada, Catriel y Paco Amoroso, La Vela Puerca, NTVG, la Juli, NAFTA, Ete y Los Problems, y los que se me faltan." },
+  { id: "toques", valor: 50, sufijo: "+", etiqueta: "toques, recitales y fiestas", nota: "Dillom, Divididos, Rada, Catriel y Paco, La Vela, NTVG, la Juli, NAFTA, Los Problems, y los que me faltan nombrar." },
   { id: "gatos", valor: 3, etiqueta: "gatos criados", nota: "PaatPat, Jojo y La Rubia." },
-  { id: "luismi", valor: 4, sufijo: " h", etiqueta: "de Luis Miguel en la playlist", nota: "Y contando." },
-  { id: "entregas", texto: "Algún par", etiqueta: "entregas de la facultad hechas por mí", nota: "Con tu nota y mi esfuerzo." },
+  { id: "luismi", valor: 4, sufijo: " hs", etiqueta: "de Luis Miguel en tu playlist", nota: "Y contando..." },
+  { id: "entregas", texto: "X", etiqueta: "de entregas de la facultad hechas por mí", nota: "Con tu nota y mi esfuerzo." },
   { id: "bares", texto: "N", etiqueta: "bares en común", nota: "Como queda una lunita." },
 ];
 
 /* Vales canjeables */
 const VALES = [
   { id: "tallarines", titulo: "Vale por unos tallarines con tuco", detalle: "Receta original. Sin té de por medio." },
-  { id: "luismi", titulo: "Vale por una noche de Luis Miguel sin quejas", detalle: "Cuatro horas de playlist, cero comentarios." },
-  { id: "toque", titulo: "Vale por un toque a elección", detalle: "Yo pongo las ganas, vos elegís la banda." },
-  { id: "abrazo", titulo: "Vale por un abrazo largo", detalle: "Se cobra en persona. No vence." }, // TODO: cambialo si querés otro
+  { id: "luismi", titulo: "Vale por una noche de Luis Mi sin quejas", detalle: "Cuatro horas de playlist, cero comentarios." },
+  { id: "toque", titulo: "Vale por un toque a elección", detalle: "Yo pongo las ganas, vos seteas la noche." },
+  { id: "abrazo", titulo: "Vale por un abrazo largo", detalle: "Se cobra en persona. No vence, ni tiene límite de usos." }, // TODO: cambialo si querés otro
 ];
 
 /* =============================================================
@@ -458,6 +457,15 @@ function plantillaRecuerdo(r) {
               <p class="reproductor__pie">${pie}</p>
             </div>`;
   }
+  if (r.tipo === "video") {
+  return `<figure class="polaroid">
+            <video src="${escapar(r.contenido)}"
+                   autoplay loop muted playsinline
+                   preload="auto"
+                   aria-label="${escapar(r.alt || "")}"></video>
+            <figcaption>${pie}</figcaption>
+          </figure>`;
+}
   return `<blockquote class="nota"><p>${escapar(r.contenido)}</p>${pie ? `<footer>${pie}</footer>` : ""}</blockquote>`;
 }
 
@@ -479,6 +487,7 @@ function enlazarMedios(raiz) {
 }
 
 function seguir() {
+  pausarAudios();
   if (estado.nivel < LEVELS.length - 1) {
     estado.nivel += 1;
     estado.fase = "nivel";
@@ -493,6 +502,7 @@ function seguir() {
     render();
     scrollArriba();
     lanzarChispas();
+    reproducirMusica();
   }
 }
 
@@ -668,6 +678,35 @@ function pasaUnGato() {
   capa.appendChild(gato);
 }
 
+/* Música del final. El navegador solo deja sonar si hubo un toque del usuario:
+   por eso se arranca desde seguir() (click en "Ir al final"). Si recarga la página
+   estando en el final, no suena sola: usa el botón "Poner música". */
+function pausarAudios() {
+  document.querySelectorAll("audio").forEach((a) => a.pause());
+}
+
+function reproducirMusica() {
+  const promesa = $("#musica").play();
+  if (promesa && promesa.catch) promesa.catch(() => {}); // si el navegador lo bloquea, queda el botón
+}
+
+function configurarMusica() {
+  const audio = $("#musica");
+  const boton = $("#btn-musica");
+  const texto = $("#musica-texto");
+
+  const actualizar = () => {
+    const suena = !audio.paused;
+    boton.setAttribute("aria-pressed", String(suena));
+    boton.classList.toggle("musica--suena", suena);
+    texto.textContent = suena ? "Pausar música" : "Poner música";
+  };
+
+  boton.addEventListener("click", () => (audio.paused ? reproducirMusica() : audio.pause()));
+  ["play", "pause", "ended"].forEach((evento) => audio.addEventListener(evento, actualizar));
+  audio.addEventListener("error", () => (texto.textContent = "Falta el archivo de música"));
+}
+
 function lanzarChispas() {
   if (reducirMovimiento()) return;
   const capa = $("#capa-chispas");
@@ -691,6 +730,8 @@ function lanzarChispas() {
    ============================================================= */
 function reiniciar() {
   if (!confirm("¿Empezar de nuevo? Se borra el progreso y los vales canjeados.")) return;
+   pausarAudios();
+  $("#musica").currentTime = 0;
   estado = estadoNuevo();
   guardarEstado();
   render();
@@ -721,7 +762,8 @@ function init() {
     scrollArriba();
   });
   $("#btn-reiniciar").addEventListener("click", reiniciar);
-
+  
+  configurarMusica();
   aplicarParametrosDePrueba();
   render();
 }

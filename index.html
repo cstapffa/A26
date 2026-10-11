@@ -23,6 +23,9 @@
   <div class="grano" aria-hidden="true"></div>
   <div class="capa-chispas" id="capa-chispas" aria-hidden="true"></div>
   <div class="capa-gato" id="capa-gato" aria-hidden="true"></div>
+    
+    <!-- Canción del final (la reproduce index.js al llegar a la última pantalla) -->
+  <audio id="musica" preload="none" src="assets/audio/somos-novios.mp3"></audio>
  
   <!-- Progreso -->
   <header class="barra" id="barra" hidden>
@@ -37,7 +40,7 @@
     <section class="pantalla pantalla--estrecha" id="intro" aria-labelledby="intro-titulo" hidden>
       <h1 class="intro__titulo" id="intro-titulo">¡Feliz aniversario!</h1>
       <p class="intro__texto">
-        Tres años juntos, dos en pareja, países distintos y yo programando un regalo en vez de abrazarte. Así estamos.
+        Son tres años juntos, dos en pareja, países distintos y yo programando un regalo en vez de abrazarte. Así estamos.
       </p>
  
       <div class="caja">
@@ -65,10 +68,15 @@
       <header class="final__apertura">
         <h2 class="final__titulo" id="final-titulo">Llegaste al final.</h2>
         <p class="final__texto">Lo que sigue no tiene respuesta correcta.</p>
+
+        <button type="button" class="musica" id="btn-musica" aria-pressed="false">
+          <span aria-hidden="true">♪</span>
+          <span id="musica-texto">Poner música</span>
+        </button>
       </header>
  
       <article class="carta" aria-labelledby="carta-titulo">
-        <h3 class="carta__titulo" id="carta-titulo">Una carta</h3>
+        <h3 class="carta__titulo" id="carta-titulo">Mononito,</h3>
         <div id="carta-cuerpo"></div>
         <p class="carta__firma" id="carta-firma"></p>
       </article>
@@ -86,7 +94,7 @@
         <div class="row g-4" id="vales-lista"></div>
       </section>
  
-      <p class="cierre">Te amo</p>
+      <p class="cierre">Te amo <3</p>
     </section>
  
     <noscript>
